@@ -1,30 +1,29 @@
-import java.util.Scanner;
-
 public class Account {
+    private String accountNumber;
+    private int balance;
 
-    static Scanner sc = new Scanner(System.in);
-
-
-
-    public static void deposit(int balance){
-        // 입금   balance + money
-        System.out.println("입금시킬 금액을 입력하시오.");
-        int money = sc.nextInt();
-        balance += money;
-        System.out.println(balance);
-
+    public Account(String accountNumber, int balance) {
+        this.accountNumber = accountNumber;
+        this.balance = balance;
     }
 
-    public static void withdraw(int balance){
-            // 출금 balcne - money
-        System.out.println("출금시킬 금액을 입력하시오");
-        int money = sc.nextInt();
-        balance -= money;
-        System.out.print(balance);
+    public String getAccount() {
+        return accountNumber;
     }
 
-    public static void showBalacne(int balance) {
-        // 잔고 확인
-        System.out.println(balance);
+    public int getBalance() {
+        return balance;
+    }
+
+    public void addBalance(int amount) {
+        this.balance += amount;
+    }
+
+    public boolean withDraw(int amount) {
+        if (balance >= amount) {
+            balance -= amount;
+            return true;
+        }
+        return false;
     }
 }

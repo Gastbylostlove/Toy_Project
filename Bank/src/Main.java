@@ -1,51 +1,62 @@
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+    public static void main(String[] args) {
+        List<Account> accountlist = new ArrayList<>();
+        Scanner sc = new Scanner(System.in);
 
+        accountlist.add(new Account("110-449-612674", 100000));
+        accountlist.add(new Account("110-449-611672", 50500));
+        accountlist.add(new Account("110-444-123784", 87400));
 
-    // 왜 입력을 메인 메서드 밖에서 선언지?
-    // 입력
-    static Scanner sc = new Scanner(System.in);
+        while (true) {
+            System.out.println("1. 예금 / 2. 출금 / 3. 잔고 확인 / 4. 종료");
 
-    // 계좌번호와 잔고는 소중하니깐
-    private String accountNum;
-    private static int balance;     //왜 얘한테만 static이 붙여질까? 1. 재사용하기 위해서, 2. 동적인 값이기에
+            int menu = sc.nextInt();
+            sc.nextLine();
 
-    public void Account(String accountNum, int balance){
-        this.accountNum = accountNum;
-        this.balance = 0;
-    }
+            if (menu == 4) {
+                System.out.println("프로그램을 종료합니다.");
+                break;
+            }
 
-    public static void main(String[] args)
-    {
-        System.out.println("계좌를 입력하세요");
-        String account = sc.nextLine();
+            System.out.println("계좌번호를 입력하세요.");
+            String accountNum = sc.nextLine();
 
+            boolean found = false;
 
-        // 메서드 호출
-        while(true) {
+            for (Account account : accountlist) {
+                if (account.getAccount().equals(accountNum)) {
+                    found = true;
 
-            System.out.println("예금, 출금, 잔고, 종료");
-
-            // 입력을 받는다.
-            // nextLine : 엔터를 치기 전까지의 문장 전체 입력
-            String oper = sc.nextLine();
-
-            switch (oper){
-                case"예금":
-                    Account.deposit(balance);
-
-                case"출금":
-                    Account.withdraw(balance);
-
-                case"잔고":
-                    Account.showBalacne(balance);
-
-                case"종료":
+                    if (menu == 1) {
+                        System.out.println("입금할 금액을 입력하시오.");
+                        int money = sc.nextInt();
+                        sc.nextLine();
+                        account.addBalance(money);
+                        System.out.println("입금 완료. 현재 잔액: " + account.getBalance());
+                    } else if (menu == 2) {
+                        System.out.println("출금할 금액을 입력하시오.");
+                        int money = sc.nextInt();
+                        sc.nextLine();
+                        if (account.withDraw(money)) {
+                            System.out.println("출금 완료. 현재 잔액: " + account.getBalance());
+                        } else {
+                            System.out.println("잔액이 부족합니다.");
+                        }
+                    } else if (menu == 3) {
+                        System.out.println("현재 잔액: " + account.getBalance());
+                    }
                     break;
+                }
+            }
 
+            if (!found) {
+                System.out.println("해당 계좌를 찾을 수 없습니다.");
             }
         }
+        sc.close();
     }
 }
