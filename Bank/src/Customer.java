@@ -43,13 +43,11 @@ public class Customer {
     }
 
     public Account findAccount(String searchAccount) {
-        for (Customer customer : customerList) {
-            for (Account account : customer.getAccounts()) {
+            for (Account account : accounts) {
                 if (account.getAccountNumber().equals(searchAccount)) {
                     return account;
                 }
             }
-        }
         return null;
     }
 }
